@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Recipe Builder
 
-## Getting Started
+A sleek, minimal, Apple-like web application that acts as your personal AI sous-chef. Generate custom recipes from your pantry, respect dietary constraints, and chat with the AI continuously while cooking.
 
-First, run the development server:
+Built with **Next.js (App Router), Tailwind CSS, shadcn/ui, Supabase, and Google Gemini SDK.**
 
-```bash
+## Features
+- **Guest Mode:** Start immediately using local storage for your pantry and preferences.
+- **Auth Mode:** Sync your saved data and generated recipe history across devices using Supabase Magic Links & Google OAuth.
+- **Smart Preferences:** Set diets, allergies, budget, cook time, and skill level. The AI strictly adheres to these.
+- **Pantry Builder:** Select what you have available, and the AI will prioritize using those ingredients.
+- **Continuous AI Chat:** Every generated recipe has a persistent side-drawer chat for step-by-step guidance, substitutions, or "help I messed up" advice.
+- **Apple-like Design:** Clean typography, generous whitespace, smooth edge radii, and dark mode support.
+
+## Local Setup
+
+### 1. Requirements
+- Node.js >= 18
+- npm or pnpm
+- A Supabase Project
+- A Google AI (Gemini) API Key
+
+### 2. Install Dependencies
+\`\`\`bash
+npm install
+\`\`\`
+
+### 3. Environment Variables
+Copy the example env file:
+\`\`\`bash
+cp .env.example .env.local
+\`\`\`
+
+Fill in your \`.env.local\`:
+\`\`\`
+NEXT_PUBLIC_SUPABASE_URL=https://[YOUR-PROJECT].supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+GOOGLE_GENERATIVE_AI_API_KEY=your-gemini-free-api-key
+\`\`\`
+
+### 4. Database Setup
+1. Go to your Supabase project's SQL Editor.
+2. Open the \`supabase_schema.sql\` file provided in the root of this repository.
+3. Paste the contents into the Supabase SQL editor and execute it. This creates all tables and Row Level Security policies.
+
+### 5. Run the App
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
+Visit \`http://localhost:3000\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment to Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The easiest way to deploy this app is on Vercel:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Push this project to a new GitHub repository.
+2. Go to [Vercel](https://vercel.com/new) and import the repository.
+3. In the environment variables section, add the same 3 variables from your \`.env.local\`.
+4. Click **Deploy**.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Make sure you update your Supabase Auth settings to include your new Vercel production URL in the `Site URL` and `Redirect URLs` settings!
