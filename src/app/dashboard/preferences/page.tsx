@@ -28,9 +28,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const preferencesFormSchema = z.object({
-    diet: z.string({
-        required_error: "Please select a dietary preference.",
-    }),
+    diet: z.string().min(1, "Please select a dietary preference."),
     allergies: z.string().optional(),
     avoidIngredients: z.string().optional(),
     budget: z.coerce.number().min(0, "Budget must be a positive number"),
@@ -64,7 +62,7 @@ export default function PreferencesPage() {
     }
 
     const form = useForm<PreferencesFormValues>({
-        resolver: zodResolver(preferencesFormSchema),
+        resolver: zodResolver(preferencesFormSchema) as any,
         defaultValues,
     })
 

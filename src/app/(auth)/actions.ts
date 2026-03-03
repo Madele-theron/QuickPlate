@@ -1,9 +1,9 @@
+'use server'
+
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
 export async function login(formData: FormData) {
-    'use server'
-
     const email = formData.get('email') as string
     const supabase = await createClient()
 
@@ -24,7 +24,6 @@ export async function login(formData: FormData) {
 }
 
 export async function loginWithGoogle() {
-    'use server'
     const supabase = await createClient()
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -43,7 +42,6 @@ export async function loginWithGoogle() {
 }
 
 export async function logout() {
-    'use server'
     const supabase = await createClient()
     await supabase.auth.signOut()
     redirect('/')

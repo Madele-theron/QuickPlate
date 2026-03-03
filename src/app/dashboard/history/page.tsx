@@ -38,11 +38,11 @@ export default async function HistoryPage() {
         )
     }
 
-    const { data: recipes, error } = await supabase
+    const { data: recipes, error } = await (supabase
         .from('recipes')
         .select('id, title, created_at, recipe_json')
         .order('created_at', { ascending: false })
-        .limit(20)
+        .limit(20) as any)
 
     return (
         <div className="flex flex-col gap-8 w-full max-w-4xl mx-auto">
@@ -60,7 +60,7 @@ export default async function HistoryPage() {
                 </Card>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {recipes.map((recipe) => (
+                    {recipes.map((recipe: any) => (
                         <Link key={recipe.id} href={`/recipe/${recipe.id}`}>
                             <Card className="rounded-2xl shadow-sm border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all hover:shadow-md cursor-pointer group h-full">
                                 <CardHeader>

@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { Clock, Users, Flame, Info, MessageCircle, Send, Loader2 } from 'lucide-react'
+import { Clock, Users, Flame, Info, MessageCircle, Send, Loader2, Utensils as ChefHat } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { type Recipe } from '@/lib/schema/recipe'
-import { useChat } from 'ai/react'
+import { useChat } from '@ai-sdk/react'
 import { useUserStore } from '@/lib/store'
 import ReactMarkdown from 'react-markdown'
 
@@ -46,7 +46,7 @@ export default function RecipeDisplay({ recipeId, dbRecipe }: { recipeId: string
         },
         // We can provide initial messages if we fetched them from the DB, 
         // but for now we start fresh or rely on standard ai/react persistence if configured.
-    })
+    } as any) as any
 
     // We haven't implemented local storage for chat messages in this demo yet.
 
@@ -174,7 +174,7 @@ export default function RecipeDisplay({ recipeId, dbRecipe }: { recipeId: string
                             </div>
                         ) : (
                             <div className="space-y-4">
-                                {messages.map(m => (
+                                {messages.map((m: any) => (
                                     <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                         <div className={`
                       max-w-[85%] rounded-2xl px-4 py-2 text-sm
@@ -182,9 +182,11 @@ export default function RecipeDisplay({ recipeId, dbRecipe }: { recipeId: string
                                                 ? 'bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900'
                                                 : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50'}
                     `}>
-                                            <ReactMarkdown className="prose dark:prose-invert prose-sm max-w-none">
-                                                {m.content}
-                                            </ReactMarkdown>
+                                            <div className="prose dark:prose-invert prose-sm max-w-none">
+                                                <ReactMarkdown>
+                                                    {m.content}
+                                                </ReactMarkdown>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}

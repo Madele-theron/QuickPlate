@@ -19,11 +19,11 @@ export default async function RecipePage({
     // but for the Server Component, we fetch the saved DB recipe.
 
     const supabase = await createClient()
-    const { data: recipe, error } = await supabase
+    const { data: recipe, error } = await (supabase
         .from('recipes')
         .select('*')
         .eq('id', id)
-        .single()
+        .single() as any)
 
     if (error || !recipe) {
         // If not found in DB, it might be a guest recipe living in local storage,

@@ -43,8 +43,7 @@ export async function POST(req: Request) {
 
         if (user) {
             // Save to database
-            const { data, error } = await supabase
-                .from('recipes')
+            const { data, error } = await (supabase.from('recipes') as any)
                 .insert({
                     user_id: user.id,
                     title: object.title,
@@ -56,7 +55,7 @@ export async function POST(req: Request) {
             if (error) {
                 console.error("Failed to save recipe to DB:", error)
             } else {
-                recipeId = data.id
+                recipeId = (data as any).id
             }
         }
 
